@@ -18,7 +18,7 @@ export function Header() {
   }
 
   return (
-    <header className="w-full border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-950">
+    <header className="w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div className="mx-auto flex max-w-10/12 items-center justify-between px-6 py-2">
         {/* Logo */}
         <div className="flex items-center gap-2">
@@ -37,7 +37,10 @@ export function Header() {
 
         {/* Nav */}
         <nav className="flex items-center gap-8">
-          <button className="p-2 rounded-3xl flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <button
+            onClick={() => window.dispatchEvent(new Event("futeco:how-to-play"))}
+            className="p-2 rounded-3xl flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
             <CircleHelp className="h-4 w-4" />
             Como jogar
           </button>

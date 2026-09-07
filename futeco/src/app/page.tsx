@@ -1,6 +1,8 @@
-const Page = () => {
-  return(<div>Hello, Next.js!</div>);
+"use client";
+
+import TesteJogoPage from "./testeJogo/page";
+
+export default function Page() {
+	return <TesteJogoPage />;
 }
 
-export default Page;
-  

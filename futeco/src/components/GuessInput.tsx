@@ -14,9 +14,10 @@ interface TeamOption {
 interface GuessInputProps {
   onGuess: (teamName: string) => void;
   disabled?: boolean;
+  selectedTeamNames?: string[];
 }
 
-export function GuessInput({ onGuess, disabled }: GuessInputProps) {
+export function GuessInput({ onGuess, disabled, selectedTeamNames = [] }: GuessInputProps) {
   const [allTeams, setAllTeams] = useState<TeamOption[]>([]);
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -42,31 +43,41 @@ export function GuessInput({ onGuess, disabled }: GuessInputProps) {
   const filteredTeams =
     query.length > 0
       ? allTeams
-          .filter((team) => team.name.toLowerCase().includes(query.toLowerCase()))
+          .filter(
+            (team) =>
+              team.name.toLowerCase().includes(query.toLowerCase()) &&
+              !selectedTeamNames.some(
+                (selectedName) => selectedName.toLowerCase() === team.name.toLowerCase()
+              )
+          )
           .slice(0, 6)
       : [];
 
   function handleSelect(team: TeamOption) {
-    setQuery(team.name);
+    if (selectedTeamNames.some((name) => name.toLowerCase() === team.name.toLowerCase())) {
+      return;
+    }
+
+    onGuess(team.name);
+    setQuery("");
     setIsOpen(false);
   }
 
   function handleSubmit() {
-  console.log("query:", query);
-  console.log("allTeams length:", allTeams.length);
+    const matchedTeam = allTeams.find(
+      (team) =>
+        team.name.toLowerCase() === query.toLowerCase() &&
+        !selectedTeamNames.some(
+          (selectedName) => selectedName.toLowerCase() === team.name.toLowerCase()
+        )
+    );
 
-  const matchedTeam = allTeams.find(
-    (team) => team.name.toLowerCase() === query.toLowerCase()
-  );
+    if (!matchedTeam) return;
 
-  console.log("matchedTeam:", matchedTeam);
-
-  if (!matchedTeam) return;
-
-  onGuess(matchedTeam.name);
-  setQuery("");
-  setIsOpen(false);
-}
+    onGuess(matchedTeam.name);
+    setQuery("");
+    setIsOpen(false);
+  }
 
   return (
     <div ref={containerRef} className="relative flex gap-3">
@@ -81,17 +92,17 @@ export function GuessInput({ onGuess, disabled }: GuessInputProps) {
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           placeholder="Digite o nome de um time..."
           disabled={disabled}
-          className="w-full h-12 px-4 rounded-md border border-gray-200 bg-white text-sm outline-none focus:border-green-500 disabled:opacity-50"
+          className="h-12 w-full rounded-md border border-gray-200 bg-white px-4 text-sm outline-none focus:border-green-500 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
         />
 
         {isOpen && filteredTeams.length > 0 && (
-          <ul className="absolute z-10 top-full mt-1 w-full rounded-md border border-gray-200 bg-white shadow-md overflow-hidden">
+          <ul className="absolute top-full z-10 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
             {filteredTeams.map((team) => (
               <li key={team.id}>
                 <button
                   type="button"
                   onClick={() => handleSelect(team)}
-                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left hover:bg-gray-50"
+                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <Image src={team.crest} alt={team.name} width={20} height={20} className="object-contain" />
                   {team.name}
@@ -101,12 +112,6 @@ export function GuessInput({ onGuess, disabled }: GuessInputProps) {
           </ul>
         )}
       </div>
-
-      <button
-        onClick={() => alert("clicou")}
-      >
-        Teste
-      </button>
 
     </div>
   );

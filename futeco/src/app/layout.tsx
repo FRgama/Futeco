@@ -14,7 +14,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.className} bg-[#fefefe] text-[#393e4b]`}>
+      <body className={inter.className}>
         <Header />
         <main>{children}</main>
       </body>
