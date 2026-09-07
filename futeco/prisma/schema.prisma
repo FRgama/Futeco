@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id              Int     @id @default(autoincrement())
+  apiId           Int     @unique
+
+  name            String  @unique
+  shortName       String?
+  crest           String
+
+  country         String
+  founded         Int
+
+  nationalTitles  Int?
+  uefaRanking     Int @default(999)
+  dailyChallenges DailyChallenge[]
+}
+
+model DailyChallenge {
+  id        Int      @id @default(autoincrement())
+  date      String   @unique // formato "YYYY-MM-DD"
+  teamId    Int
+  team      Team     @relation(fields: [teamId], references: [id])
+  createdAt DateTime @default(now())
+}

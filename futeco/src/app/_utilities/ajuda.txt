@@ -1,0 +1,14 @@
+/*
+// codigo das ligas
+
+[
+    Premier league: 39,
+    La Liga: 140,
+    Bundesliga: 42,
+    Ligue 1: 61,
+    Primeira Liga: 94,
+    Serie A: 135
+
+]
+
+*/
