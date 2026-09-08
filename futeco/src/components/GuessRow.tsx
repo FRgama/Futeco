@@ -9,7 +9,7 @@ interface GuessRowProps {
 
 export function GuessHeader() {
   return (
-    <div className="guess-grid box-border min-h-14 items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 text-center text-xs font-semibold uppercase leading-tight tracking-wide text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+    <div className="guess-grid box-border min-h-14 items-center gap-2 rounded-md border border-gray-200 bg-gray-50 text-center text-xs font-semibold uppercase leading-tight tracking-wide text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
       <span>Clube</span>
       <span>País</span>
       <span>Ano de fundação</span>
@@ -21,7 +21,7 @@ export function GuessHeader() {
 
 export function GuessRow({ guess }: GuessRowProps) {
   return (
-    <div className="guess-grid box-border items-center gap-2 px-3">
+    <div className="guess-grid box-border items-center gap-2">
       <div className="flex h-14 animate-reveal items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-3 text-sm font-medium dark:border-gray-700 dark:bg-gray-800">
         <Image
           src={guess.crest}

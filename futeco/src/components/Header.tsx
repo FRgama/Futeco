@@ -2,19 +2,40 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { CircleHelp, BarChart3, Sun, Moon } from "lucide-react";
 import tucasImage from "../app/img/tucas.png";
 
+const darkModeQuery = "(prefers-color-scheme: dark)";
+
+function subscribeToColorScheme(onChange: () => void) {
+  const mediaQuery = window.matchMedia(darkModeQuery);
+  mediaQuery.addEventListener("change", onChange);
+  return () => mediaQuery.removeEventListener("change", onChange);
+}
+
+function getSystemDarkMode() {
+  return window.matchMedia(darkModeQuery).matches;
+}
+
+function getServerDarkMode() {
+  return false;
+}
+
 export function Header() {
-  const [isDark, setIsDark] = useState(false);
+  const systemIsDark = useSyncExternalStore(
+    subscribeToColorScheme,
+    getSystemDarkMode,
+    getServerDarkMode
+  );
+  const [manualTheme, setManualTheme] = useState<boolean | null>(null);
+  const isDark = manualTheme ?? systemIsDark;
 
   function toggleTheme() {
-    setIsDark((prev) => {
-      const next = !prev;
-      document.documentElement.classList.toggle("dark", next);
-      return next;
-    });
+    const nextThemeIsDark = !isDark;
+    setManualTheme(nextThemeIsDark);
+    document.documentElement.classList.toggle("dark", nextThemeIsDark);
+    document.documentElement.classList.toggle("light", !nextThemeIsDark);
   }
 
   return (

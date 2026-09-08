@@ -21,16 +21,18 @@ body {
 }
 
 .guess-grid {
+  --club-column-width: 260px;
   box-sizing: border-box;
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(240px, 260px) repeat(4, minmax(110px, 1fr));
+  grid-template-columns: var(--club-column-width) repeat(4, minmax(110px, 1fr));
 }
 
 @media (max-width: 640px) {
   .guess-grid {
+    --club-column-width: 150px;
     box-sizing: border-box;
-    width: 620px;
+    width: 622px;
     grid-template-columns: 150px repeat(4, 110px);
   }
 }
@@ -44,6 +46,30 @@ html.dark {
 html.dark body {
   background: var(--background);
   color: var(--foreground);
+}
+
+html.light {
+  --background: #ffffff;
+  --foreground: #171717;
+  color-scheme: light;
+}
+
+html.light body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.dark):not(.light) {
+    --background: #0b1120;
+    --foreground: #e5e7eb;
+    color-scheme: dark;
+  }
+
+  :root:not(.dark):not(.light) body {
+    background: var(--background);
+    color: var(--foreground);
+  }
 }
 
 @keyframes reveal {
