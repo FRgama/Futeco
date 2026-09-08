@@ -92,17 +92,17 @@ export function GuessInput({ onGuess, disabled, selectedTeamNames = [] }: GuessI
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           placeholder="Digite o nome de um time..."
           disabled={disabled}
-          className="h-12 w-full rounded-md border border-gray-200 bg-white px-4 text-sm outline-none focus:border-green-500 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+          className="h-12 w-full rounded-md border border-[#d9e3ec] bg-white px-4 text-sm outline-none shadow-sm focus:border-green-500 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
         />
 
         {isOpen && filteredTeams.length > 0 && (
-          <ul className="absolute top-full z-10 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
+          <ul className="absolute top-full z-10 mt-1 w-full overflow-hidden rounded-md border border-[#d9e3ec] bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
             {filteredTeams.map((team) => (
               <li key={team.id}>
                 <button
                   type="button"
                   onClick={() => handleSelect(team)}
-                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-[#eef5fa] dark:hover:bg-gray-700"
                 >
                   <Image src={team.crest} alt={team.name} width={20} height={20} className="object-contain" />
                   {team.name}
