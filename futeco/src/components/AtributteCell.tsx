@@ -19,7 +19,7 @@ const statusStyles: Record<MatchStatus, string> = {
 export function AttributeCell({ status, value, hint, revealDelay = 0 }: AttributeCellProps) {
   return (
     <div
-      className="relative flex h-14 animate-reveal items-center justify-center gap-1 overflow-hidden rounded-md bg-gray-100 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-200"
+      className="theme-muted relative flex h-14 animate-reveal items-center justify-center gap-1 overflow-hidden rounded-md text-sm font-medium"
       style={{ animationDelay: `${revealDelay}ms` }}
     >
       <span
@@ -27,9 +27,9 @@ export function AttributeCell({ status, value, hint, revealDelay = 0 }: Attribut
         className={`absolute inset-0 animate-status-fill ${statusStyles[status]}`}
         style={{ animationDelay: `${revealDelay + 280}ms` }}
       />
-      <span className="relative z-10 text-white">{value}</span>
-      {status !== "correct" && hint === "higher" && <ChevronUp className="relative z-10" size={16} />}
-      {status !== "correct" && hint === "lower" && <ChevronDown className="relative z-10" size={16} />}
+      <span className="attribute-value relative z-10">{value}</span>
+      {status !== "correct" && hint === "higher" && <ChevronUp className="attribute-value relative z-10" size={16} />}
+      {status !== "correct" && hint === "lower" && <ChevronDown className="attribute-value relative z-10" size={16} />}
     </div>
   );
 }
