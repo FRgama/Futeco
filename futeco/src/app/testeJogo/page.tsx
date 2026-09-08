@@ -15,6 +15,31 @@ export default function TesteJogoPage() {
   const [winningTeamName, setWinningTeamName] = useState("");
   const [winningAttempt, setWinningAttempt] = useState(0);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [timeUntilNextChallenge, setTimeUntilNextChallenge] = useState("00:00:00");
+
+  useEffect(() => {
+    function updateCountdown() {
+      const now = new Date();
+      const nextUtcMidnight = Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + 1
+      );
+      const difference = Math.max(0, nextUtcMidnight - now.getTime());
+      const totalSeconds = Math.floor(difference / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      setTimeUntilNextChallenge(
+        [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":")
+      );
+    }
+
+    updateCountdown();
+    const interval = window.setInterval(updateCountdown, 1000);
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     function openHowToPlay() {
@@ -44,13 +69,12 @@ export default function TesteJogoPage() {
       setWinningTeamName(result.teamName);
       setWinningAttempt(guesses.length + 1);
       setHasWon(true);
-      setShowVictory(true);
+      window.setTimeout(() => setShowVictory(true), 1200);
     }
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-4 px-4 py-10 text-gray-900 dark:text-gray-100">
-      <h1 className="text-xl font-semibold">Teste — FUTECO</h1>
+    <div className="mx-auto w-full max-w-5xl space-y-5 px-3 py-6 text-gray-900 sm:px-6 sm:py-10 dark:text-gray-100">
 
       <GuessInput
         onGuess={handleGuess}
@@ -58,9 +82,9 @@ export default function TesteJogoPage() {
         selectedTeamNames={guesses.map((guess) => guess.teamName)}
       />
 
-      <div className="space-y-2">
+      <div className="guess-board space-y-2 overflow-x-auto pb-2">
         {guesses.length > 0 && <GuessHeader />}
-        {guesses.map((guess) => (
+        {[...guesses].reverse().map((guess) => (
           <GuessRow key={guess.teamName} guess={guess} />
         ))}
       </div>
@@ -87,6 +111,9 @@ export default function TesteJogoPage() {
             </p>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Tentativa {winningAttempt}
+            </p>
+            <p className="mt-5 border-t border-gray-200 pt-4 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+              Próximo clube em <span className="font-bold tabular-nums text-gray-700 dark:text-gray-200">{timeUntilNextChallenge}</span>
             </p>
           </div>
         </div>

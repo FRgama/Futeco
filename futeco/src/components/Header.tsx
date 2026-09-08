@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <header className="w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <div className="mx-auto flex max-w-10/12 items-center justify-between px-6 py-2">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-3 py-2 sm:px-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <Image
@@ -30,24 +30,24 @@ export function Header() {
             className="h-20 w-20 rounded-full object-cover"
             priority
           />
-          <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <span className="hidden text-xl font-bold tracking-tight text-gray-900 sm:inline dark:text-white">
             FUTECO
           </span>
         </div>
 
         {/* Nav */}
-        <nav className="flex items-center gap-8">
+        <nav className="flex items-center gap-2 sm:gap-8">
           <button
             onClick={() => window.dispatchEvent(new Event("futeco:how-to-play"))}
             className="p-2 rounded-3xl flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <CircleHelp className="h-4 w-4" />
-            Como jogar
+            <span className="hidden sm:inline">Como jogar</span>
           </button>
 
           <button className="p-2 rounded-3xl flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ">
             <BarChart3 className="h-4 w-4" />
-            Estatísticas
+            <span className="hidden sm:inline">Estatísticas</span>
           </button>
 
           <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-800 pl-6">

@@ -28,6 +28,7 @@ function compareNumber(
 export function compareTeams(guessedTeam: Team, secretTeam: Team): GuessResult {
   return {
     teamName: guessedTeam.name,
+    shortName: guessedTeam.shortName,
     crest: guessedTeam.crest,
     country: compareText(guessedTeam.country, secretTeam.country),
     founded: compareNumber(guessedTeam.founded, secretTeam.founded),

@@ -10,6 +10,7 @@ export interface AttributeComparison {
 
 export interface GuessResult {
   teamName: string;
+  shortName: string | null;
   crest: string;
   country: AttributeComparison;
   founded: AttributeComparison;

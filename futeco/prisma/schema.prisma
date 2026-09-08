@@ -22,6 +22,7 @@ model Team {
   shortName       String?
   crest           String
 
+
   country         String
   founded         Int
 

@@ -20,6 +20,21 @@ body {
   transition: background-color 200ms ease, color 200ms ease;
 }
 
+.guess-grid {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(240px, 260px) repeat(4, minmax(110px, 1fr));
+}
+
+@media (max-width: 640px) {
+  .guess-grid {
+    box-sizing: border-box;
+    width: 620px;
+    grid-template-columns: 150px repeat(4, 110px);
+  }
+}
+
 html.dark {
   --background: #0b1120;
   --foreground: #e5e7eb;
