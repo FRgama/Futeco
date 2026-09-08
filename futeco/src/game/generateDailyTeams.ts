@@ -3,9 +3,15 @@
 import prisma from "../db/prisma";
 
 function getTodayDateString(): string {
-  // Garante consistência de fuso horário (ajuste se quiser UTC-3, por ex.)
-  const now = new Date();
-  return now.toISOString().split("T")[0]; // "YYYY-MM-DD"
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 export async function getDailyTeam() {

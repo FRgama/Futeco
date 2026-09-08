@@ -20,12 +20,12 @@ export default function TesteJogoPage() {
   useEffect(() => {
     function updateCountdown() {
       const now = new Date();
-      const nextUtcMidnight = Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate() + 1
+      const saoPauloNow = new Date(
+        now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
       );
-      const difference = Math.max(0, nextUtcMidnight - now.getTime());
+      const nextSaoPauloMidnight = new Date(saoPauloNow);
+      nextSaoPauloMidnight.setHours(24, 0, 0, 0);
+      const difference = Math.max(0, nextSaoPauloMidnight.getTime() - saoPauloNow.getTime());
       const totalSeconds = Math.floor(difference / 1000);
       const hours = Math.floor(totalSeconds / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
