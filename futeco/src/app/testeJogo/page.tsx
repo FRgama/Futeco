@@ -116,7 +116,7 @@ export default function TesteJogoPage() {
               {winningTeamName}
             </p>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Tentativa {winningAttempt}
+              Tentativas: {winningAttempt}
             </p>
             <p className="mt-5 border-t border-gray-200 pt-4 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
               Próximo clube em <span className="font-bold tabular-nums text-gray-700 dark:text-gray-200">{timeUntilNextChallenge}</span>
