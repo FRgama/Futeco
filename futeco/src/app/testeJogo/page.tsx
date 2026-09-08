@@ -19,17 +19,23 @@ export default function TesteJogoPage() {
 
   useEffect(() => {
     function updateCountdown() {
-      const now = new Date();
-      const saoPauloNow = new Date(
-        now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-      );
-      const nextSaoPauloMidnight = new Date(saoPauloNow);
-      nextSaoPauloMidnight.setHours(24, 0, 0, 0);
-      const difference = Math.max(0, nextSaoPauloMidnight.getTime() - saoPauloNow.getTime());
-      const totalSeconds = Math.floor(difference / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Sao_Paulo",
+        hourCycle: "h23",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).formatToParts(new Date());
+      const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+      const elapsedSeconds =
+        Number(values.hour) * 3600 +
+        Number(values.minute) * 60 +
+        Number(values.second);
+      const totalSeconds = (24 * 60 * 60 - elapsedSeconds) % (24 * 60 * 60);
+      const countdownSeconds = totalSeconds || 24 * 60 * 60;
+      const hours = Math.floor(countdownSeconds / 3600);
+      const minutes = Math.floor((countdownSeconds % 3600) / 60);
+      const seconds = countdownSeconds % 60;
 
       setTimeUntilNextChallenge(
         [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":")
